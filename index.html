@@ -27,11 +27,23 @@
         }
         
         /* Header Styles */
-        header {
+header {
     padding: 30px 0;
-    background-color: #fff;
-    border-bottom: 1px solid #e0e0e0; 
-        }
+    background-color: #000000;
+    position: relative; /* Add this for positioning the pseudo-element */
+}
+
+/* Centered separator line */
+header::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%; /* This makes it shorter than full width */
+    height: 1px;
+    background-color: #000000;
+}
         
         .nav-container {
             display: flex;
