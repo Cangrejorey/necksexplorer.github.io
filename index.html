@@ -116,7 +116,22 @@
     opacity: 1;
     transform: translateY(0);
 }
-    
+
+        /* Fix dropdown alignment */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    vertical-align: top; /* Align top edge with other buttons */
+}
+
+.nav-button {
+    display: inline-block; /* Ensure consistent display type */
+    vertical-align: top;
+}
+
+.dropdown .nav-button {
+    margin: 0; /* Remove any potential margin differences */
+}
         
         /* Main Content Area */
         main {
