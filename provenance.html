@@ -82,6 +82,48 @@
         .nav-button.active::after {
             width: 70%;
         }
+
+        /* Dropdown Styles */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.1);
+    z-index: 1;
+    left: 0;
+    border-radius: 4px;
+    margin-top: 5px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.dropdown-content a {
+    font-family: 'EB Garamond', 'Garamond', serif;
+    color: #333;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.dropdown-content a:hover {
+    background-color: #f9f9f9;
+    color: #0066cc;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
         
         /* Main Content Area */
         main {
@@ -158,11 +200,19 @@
     <header>
         <div class="container">
             <div class="nav-container">
-                <nav class="navigation">
-                    <a href="index.html" class="nav-button">explorer</a>
-                    <a href="provenance.html" class="nav-button active">provenance</a>
-                    <a href="#" class="nav-button">community</a>
-                </nav>
+               <nav class="navigation">
+    <a href="index.html" class="nav-button">explorer</a>
+    <a href="provenance.html" class="nav-button active">provenance</a>
+    <div class="dropdown">
+        <a href="#" class="nav-button">community</a>
+        <div class="dropdown-content">
+            <a href="#">Discord</a>
+            <a href="#">Twitter</a>
+            <a href="#">Telegram</a>
+            <a href="#">Forum</a>
+        </div>
+    </div>
+</nav>
             </div>
         </div>
     </header>
