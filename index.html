@@ -330,5 +330,57 @@ header::after {
             });
         });
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', async () => {
+    const collectionSlug = 'YOUR_COLLECTION_SLUG'; // Replace with your collection slug
+    const gallery = document.getElementById('nft-gallery');
+    
+    try {
+        gallery.innerHTML = '<div class="loading-spinner">Loading your NFT collection...</div>';
+        
+        // Call your Vercel serverless function
+        const response = await fetch(`/api/opensea?collection=${collectionSlug}`);
+        const data = await response.json();
+        
+        if (data.assets && data.assets.length > 0) {
+            gallery.innerHTML = ''; // Clear loading message
+            
+            data.assets.forEach(nft => {
+                const card = document.createElement('div');
+                card.className = 'nft-card';
+                
+                // Get the best image URL (use thumbnail if available, else image_url, else placeholder)
+                const imageUrl = nft.image_thumbnail_url || nft.image_url || nft.image_preview_url || '/api/placeholder/250/250';
+                
+                // Format price if available
+                let priceDisplay = 'Not listed for sale';
+                if (nft.last_sale) {
+                    const price = parseFloat(nft.last_sale.total_price) / 1e18; // Convert from wei to ETH
+                    priceDisplay = `Last sold for ${price.toFixed(3)} ETH`;
+                }
+                
+                card.innerHTML = `
+                    <img src="${imageUrl}" alt="${nft.name || 'NFT'}" class="nft-image" onerror="this.src='/api/placeholder/250/250'">
+                    <div class="nft-info">
+                        <h3 class="nft-name">${nft.name || 'Unnamed NFT'}</h3>
+                        <p class="nft-price">${priceDisplay}</p>
+                    </div>
+                `;
+                
+                card.addEventListener('click', () => {
+                    window.open(nft.permalink, '_blank');
+                });
+                
+                gallery.appendChild(card);
+            });
+        } else {
+            gallery.innerHTML = '<p>No NFTs found in this collection. Please check the collection slug.</p>';
+        }
+    } catch (error) {
+        console.error('Error fetching NFTs:', error);
+        gallery.innerHTML = '<p>Error loading NFTs. Please try again later.</p>';
+    }
+});
+</script>
 </body>
 </html>
